@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>pls click</title>
+    <title>Jumpscare</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -45,24 +45,20 @@ async function showVideo() {
     btn.style.display = "none";    // hide button
     vid.style.display = "block";   // show video
 
-    // Request fullscreen (desktop + mobile)
-    if (vid.requestFullscreen) {
-        vid.requestFullscreen();
-    } else if (vid.webkitRequestFullscreen) {
-        vid.webkitRequestFullscreen();
-    } else if (vid.msRequestFullscreen) {
-        vid.msRequestFullscreen();
-    }
+    // Request fullscreen
+    if (vid.requestFullscreen) vid.requestFullscreen();
+    else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+    else if (vid.msRequestFullscreen) vid.msRequestFullscreen();
 
-    // Start muted (required by autoplay policy)
+    // Start muted to allow autoplay
     vid.muted = true;
     await vid.play();
 
-    // Unmute and max volume after autoplay starts
-    setTimeout(() => {
+    // Once playback actually starts, unmute & max volume
+    vid.onplaying = () => {
         vid.muted = false;
-        vid.volume = 1.0;
-    }, 200);
+        vid.volume = 1.0;   // max volume
+    };
 }
 </script>
 
