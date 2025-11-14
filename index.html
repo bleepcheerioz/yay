@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jumpscare</title>
+    <title>himeno r34</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -33,12 +33,12 @@
 
 <button onclick="showVideo()">click</button>
 
-<video id="popupVideo" playsinline webkit-playsinline muted preload="auto">
+<video id="popupVideo" playsinline webkit-playsinline preload="auto">
     <source src="jump.mp4" type="video/mp4">
 </video>
 
 <script>
-async function showVideo() {
+function showVideo() {
     const vid = document.getElementById("popupVideo");
     const btn = document.querySelector("button");
 
@@ -50,15 +50,9 @@ async function showVideo() {
     else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
     else if (vid.msRequestFullscreen) vid.msRequestFullscreen();
 
-    // Start muted to allow autoplay
-    vid.muted = true;
-    await vid.play();
-
-    // Once playback actually starts, unmute & max volume
-    vid.onplaying = () => {
-        vid.muted = false;
-        vid.volume = 1.0;   // max volume
-    };
+    // Play video WITH sound immediately
+    vid.volume = 1.0;   // max volume
+    vid.play();
 }
 </script>
 
