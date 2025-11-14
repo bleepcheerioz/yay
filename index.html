@@ -1,28 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Video Popup</title>
+    <title>Fullscreen Jumpscare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
+        body {
+            margin: 0;
+            background: black;
+            overflow: hidden;
+        }
+
+        #triggerImage {
+            width: 200px;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto;
+        }
+
         #popupVideo {
             display: none;
-            width: 400px;
-            margin-top: 20px;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            background: black;
         }
     </style>
 </head>
 <body>
 
-<button onclick="showVideo()">click</button>
+<!-- Click / tap this -->
+<img id="triggerImage" src="https://via.placeholder.com/200" onclick="showVideo()">
 
-<!-- TEMPLATE VIDEO -->
-<video id="popupVideo" controls>
+<!-- Fullscreen hidden video -->
+<video id="popupVideo" playsinline webkit-playsinline preload="auto" muted>
     <source src="jump.mp4" type="video/mp4">
-    Your browser does not support the video tag.
 </video>
 
 <script>
-function showVideo() {
-    document.getElementById("popupVideo").style.display = "block";
+async function showVideo() {
+    const vid = document.getElementById("popupVideo");
+    const img = document.getElementById("triggerImage");
+
+    img.style.display = "none";      // hide image
+    vid.style.display = "block";     // show video
+
+    // Request fullscreen (desktop + mobile)
+    if (vid.requestFullscreen) {
+        vid.requestFullscreen();
+    } else if (vid.webkitRequestFullscreen) {
+        vid.webkitRequestFullscreen();
+    } else if (vid.msRequestFullscreen) {
+        vid.msRequestFullscreen();
+    }
+
+    // Start muted (required by autoplay policy)
+    vid.muted = true;
+    await vid.play();
+
+    // Unmute after autoplay starts
+    setTimeout(() => {
+        vid.muted = false;
+
+        // “Boost” audio (HTML can't exceed source volume,
+        // but this forces max volume allowed)
+        vid.volume = 1.0; 
+    }, 200);
 }
 </script>
 
