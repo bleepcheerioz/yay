@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Popup</title>
+    <style>
+        #popupVideo {
+            display: none;
+            width: 400px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<button onclick="showVideo()">click</button>
+
+<!-- TEMPLATE VIDEO -->
+<video id="popupVideo" controls>
+    <source src="jump.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<script>
+function showVideo() {
+    document.getElementById("popupVideo").style.display = "block";
+}
+</script>
+
+</body>
+</html>
